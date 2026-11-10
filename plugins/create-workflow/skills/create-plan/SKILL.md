@@ -13,7 +13,7 @@ Writes the plan for the active create session and decides how implementation pro
 1. Read `create/.current` to get the slug. If it is missing or the folder doesn't exist, tell the user to run `/create <title>` first and stop.
 2. Read `create/<slug>/log.md` (the full conversation so far) and any other documents in the session folder. Append this `/create-plan` invocation to the log (format in the `create` skill, including keeping the numbering of any questions or options).
    Check the log header for `- **Kind:** fix`; no Kind line means a create session. A fix session (started by `/fix`) uses the fix template in step 4.
-   Then commit the discussion and open the draft PR: `bash .claude/skills/create/scripts/session-git.sh commit "<Create|Fix>: <title> - discussion"` followed by `bash .claude/skills/create/scripts/session-git.sh draft-pr`. Tell the user the PR link.
+   Then commit the discussion and open the draft PR: `bash "${CLAUDE_PLUGIN_ROOT}/skills/create/scripts/session-git.sh" commit "<Create|Fix>: <title> - discussion"` followed by `bash "${CLAUDE_PLUGIN_ROOT}/skills/create/scripts/session-git.sh" draft-pr`. Tell the user the PR link.
 3. Look at the current repo structure so the plan fits what exists.
 4. Write `create/<slug>/plan.md`. For a **fix** session use the fix template below instead of this list; otherwise it contains:
    - **Goal** - one short paragraph of the intent
@@ -32,11 +32,11 @@ Writes the plan for the active create session and decides how implementation pro
    - **Steps** - ordered and numbered: (1) a regression test that fails for the right reason, or, when the bug cannot be unit tested, a documented manual repro; (2) the fix; (3) the test passing; (4) unit tests for any other changed source file per `CLAUDE.md`; (5) a final step that runs `pnpm coverage` and brings every workspace to at least 95%. A fix plan without the regression test and the coverage step is incomplete.
    - **Regression risk** - other code or behavior touching the same area, and how it is checked
    - **Open questions / risks** - anything unresolved
-5. Run `bash .claude/skills/create/scripts/set-status.sh <slug> planned` to mark the session in the `create/README.md` index.
+5. Run `bash "${CLAUDE_PLUGIN_ROOT}/skills/create/scripts/set-status.sh" <slug> planned` to mark the session in the `create/README.md` index.
 6. Summarize the plan to the user in a few lines and point at `plan.md`. Let them request changes; revise `plan.md` and log each revision.
 7. Then ask how to proceed. Offer options such as: implement everything; step by step (pause after each numbered step); file by file; or a custom approach.
 8. Log the plan creation and the chosen approach as `### [timestamp] Decision` entries in `log.md`.
-9. Commit and push the finished plan: `session-git.sh commit "<Create|Fix>: <title> - plan"` then `session-git.sh push` (script in `.claude/skills/create/scripts/`).
+9. Commit and push the finished plan: `session-git.sh commit "<Create|Fix>: <title> - plan"` then `session-git.sh push` (script in `${CLAUDE_PLUGIN_ROOT}/skills/create/scripts/`).
 
 ## During implementation
 

@@ -69,6 +69,17 @@ EOF
 
 # add the session to the index in create/README.md (status starts as "review")
 readme="$base/README.md"
+if [ ! -f "$readme" ]; then
+  cat > "$readme" <<'EOF'
+# Create sessions
+
+Tracked create/fix sessions. Each row links to a session folder holding its log, plan and summary.
+Statuses: `review`, `planned`, `complete`.
+
+| Session | Title | Status | Started |
+| --- | --- | --- | --- |
+EOF
+fi
 if [ -f "$readme" ]; then
   index_title="$title"
   [ "$kind" = fix ] && index_title="fix: $title"
