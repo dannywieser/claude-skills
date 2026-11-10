@@ -1,0 +1,5 @@
+{
+  "name": "create-workflow",
+  "version": "0.1.0",
+  "description": "Tracked create/fix session workflow: /create, /fix, /create-plan, /create-complete"
+}

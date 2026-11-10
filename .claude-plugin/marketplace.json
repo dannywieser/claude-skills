@@ -1,0 +1,11 @@
+{
+  "name": "dgw-skills",
+  "owner": { "name": "Danny Wieser" },
+  "plugins": [
+    {
+      "name": "create-workflow",
+      "source": "./plugins/create-workflow",
+      "description": "Tracked create/fix session workflow: /create, /fix, /create-plan, /create-complete"
+    }
+  ]
+}
